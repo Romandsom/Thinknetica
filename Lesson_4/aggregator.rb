@@ -50,81 +50,81 @@ class Aggregator
   end
 
   def new_route
-    @stations.each do |station|
-      p "#{(@stations.index(station)+1)}. #{station.station_name}"
-    end
     p 'Choose the first station of new route:'
+      select_station
     number_first = gets.chomp.to_i
-    @stations.each do |station|
-      p "#{(@stations.index(station)+1)}. #{station.station_name}"
-    end
     p 'Choose the last station of new route:'
+      select_station
     number_last = gets.chomp.to_i
     @routes << Route.new(@stations[number_first - 1], @stations[number_last- 1])
   end
 
   def add_station
     puts 'Choose the route to add the station'
-    support_for_routes_base
-    number_of_route = gets.chomp.to_i
-    @stations.each do |station|
-      p "#{(@stations.index(station)+1)}. #{station.station_name}"
-    end
+    subject_route = select_route
+    select_station
     p 'Choose the station to add:'
     station_number = gets.chomp.to_i
-    @routes[number_of_route - 1].route.insert(-2, @stations[station_number - 1])
+    subject_route.add_station(@stations[station_number - 1])
   end
 
   def delete_station
     puts 'Choose the route to delete the station'
-    support_for_routes_base
-    number_of_route = gets.chomp.to_i
-    @stations.each do |station|
-      p "#{(@stations.index(station)+1)}. #{station.station_name}"
-    end
+    subject_route = select_route
+    select_station
     p 'Choose the station to delete:'
     station_number = gets.chomp.to_i
-    @routes[number_of_route - 1].route.delete(@stations[station_number - 1])
+    subject_route.delete_station(@stations[station_number - 1])
   end
 
   def train_on_route
     puts 'Choose the train to set on the route'
-    select_train
-    number_of_train = gets.chomp.to_i
+    @subject_train = select_train
     puts 'Choose the route to set'
-    support_for_routes_base
-    number_of_route = gets.chomp.to_i
-    @trains[number_of_train - 1].set_route(@routes[number_of_route - 1])
+    subject_route = select_route
+    @subject_train.set_route(subject_route)
   end
+
+    def attach_car
+      puts 'Choose the train to attach a car'
+      @subject_train = select_train
+      if @subject_train.speed != 0
+        p 'Train is on the route. It should be stopped to attach a car'
+      else
+        if @subject_train.class == CargoTrain
+          car_array = @cargo_cars
+        elsif @subject_train.class == PassengerTrain
+          car_array = @passenger_cars
+        end
+        inner_method_attach(car_array)
+      end
+    end
 
   def detach_car
     puts 'Choose the train to detach a car'
-    select_train
-    number_of_train = gets.chomp.to_i
-    if @trains[@number_of_train - 1].speed != 0
+    @subject_train = select_train
+    if @subject_train.speed != 0
       p 'Train is on the route. It should be stopped to detach a car'
     else
       puts 'Choose the car to detach'
-      @trains[number_of_train - 1].train_cars.each do |car|
-        p "#{(@trains[number_of_train - 1].train_cars.index(car)+1)}. #{car.number}"
+      @subject_train.train_cars.each do |car|
+        p "#{(@subject_train.train_cars.index(car)+1)}. #{car.number}"
       end
       number_of_car = gets.chomp.to_i
-      @trains[number_of_train - 1].train_cars.delete(@trains[number_of_train - 1].train_cars[number_of_car - 1])
+      @subject_train.train_cars.delete(@subject_train.train_cars[number_of_car - 1])
     end
   end
 
   def move_forvard
     puts 'Choose the train to move forvard along the train'
-    select_train
-    number_of_train = gets.chomp.to_i
-    @trains[number_of_train - 1].next_station
+    @subject_train = select_train
+    @subject_train.next_station
   end
 
   def move_back
     puts 'Choose the train to move back along the train'
-    select_train
-    number_of_train = gets.chomp.to_i
-    @trains[number_of_train - 1].prevous_station
+    @subject_train = select_train
+    @subject_train.prevous_station
   end
 
   def aggregator_report
@@ -139,21 +139,6 @@ class Aggregator
     end
   end
 
-  def attach_car
-    puts 'Choose the train to attach a car'
-    select_train
-    @number_of_train = gets.chomp.to_i
-    if @trains[@number_of_train - 1].speed != 0
-      p 'Train is on the route. It should be stopped to attach a car'
-    else
-      if @trains[@number_of_train - 1].class == CargoTrain
-        car_array = @cargo_cars
-      elsif @trains[@number_of_train - 1].class == PassengerTrain
-        car_array = @passenger_cars
-      end
-      inner_method_attach(car_array)
-    end
-  end
 
   protected
 
@@ -165,7 +150,7 @@ class Aggregator
       p "#{(car_array.index(car)+1)}. #{car.number}"
     end
     number_of_car = gets.chomp.to_i
-    @trains[@number_of_train - 1].attach_car(car_array[number_of_car - 1])
+    @subject_train.attach_car(car_array[number_of_car - 1])
   end
 
   def support_for_report(support_array)
@@ -174,10 +159,12 @@ class Aggregator
     end
   end
 
-  def support_for_routes_base
+  def select_route
     @routes.each.with_index(1) do |support_route, index|
       p "#{support_for_routes(support_route.route)} press #{index}"
     end
+    number_of_route = gets.chomp.to_i
+    @routes[number_of_route - 1]
   end
 
   def support_for_routes(sup_route)
@@ -187,9 +174,21 @@ class Aggregator
     return nil
   end
 
-  def select_train
+  def show_trains
     @trains.each.with_index(1) do |train, index|
-      p "#{index}. #{train.number}"
+      puts "#{index}. #{train.number}"
+    end
+  end
+
+  def select_train
+    show_trains
+    number_of_train = gets.chomp.to_i
+    @trains[number_of_train - 1]
+  end
+
+  def select_station
+    @stations.each do |station|
+      p "#{(@stations.index(station)+1)}. #{station.station_name}"
     end
   end
 end
