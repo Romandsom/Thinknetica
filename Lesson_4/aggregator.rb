@@ -51,30 +51,27 @@ class Aggregator
 
   def new_route
     p 'Choose the first station of new route:'
-      select_station
-    number_first = gets.chomp.to_i
+    number_first = select_station
+    @routes << Route.new(number_first, nil)
     p 'Choose the last station of new route:'
-      select_station
-    number_last = gets.chomp.to_i
-    @routes << Route.new(@stations[number_first - 1], @stations[number_last- 1])
+    number_last = select_station
+    @routes.last.route[-1] = number_last
   end
 
   def add_station
     puts 'Choose the route to add the station'
     subject_route = select_route
-    select_station
     p 'Choose the station to add:'
-    station_number = gets.chomp.to_i
-    subject_route.add_station(@stations[station_number - 1])
+    station_number = select_station
+    subject_route.add_station(station_number)
   end
 
   def delete_station
     puts 'Choose the route to delete the station'
     subject_route = select_route
-    select_station
     p 'Choose the station to delete:'
-    station_number = gets.chomp.to_i
-    subject_route.delete_station(@stations[station_number - 1])
+    station_number = select_station
+    subject_route.delete_station(station_number)
   end
 
   def train_on_route
@@ -139,7 +136,6 @@ class Aggregator
     end
   end
 
-
   protected
 
   #Вспомогательные методы
@@ -190,5 +186,7 @@ class Aggregator
     @stations.each do |station|
       p "#{(@stations.index(station)+1)}. #{station.station_name}"
     end
+    station_number = gets.chomp.to_i
+    @stations[station_number - 1]
   end
 end
