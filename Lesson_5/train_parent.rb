@@ -2,29 +2,24 @@ class Train
   include InstanceCounter
   include BrandNaming
   attr_accessor :speed
-  attr_reader :type, :train_cars, :current_station, :train_route, :number
-  @@train_roster = []
+  attr_reader :train_cars, :current_station, :train_route, :number
+  @@train_roster = {}
 
   def self.find(train_number)
     required_train = nil
-    self.class_variable_get(self.class_variables[0]).each do |train|
-      if train.number == train_number
+    @@train_roster.each do |number, train|
+      if number == train_number
         required_train = train
       end
     end
-    p required_train
-  end
-
-  def train_type
-    @type = 'base'
+    required_train
   end
 
   def initialize(speed = 0,number)
     @speed = speed
     @number = number
     @train_cars = []
-    self.train_type
-    @@train_roster << self
+    @@train_roster[@number] = self
     register_instance
   end
 
@@ -55,7 +50,7 @@ class Train
   end
 
   def detach_car(car)
-    if @speed == 0 && @type == car.type_of_car
+    if @speed == 0
      @train_cars.delete(car)
     end
   end
