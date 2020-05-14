@@ -8,10 +8,11 @@ class Station
     @station_name = station_name
     @station_trains = []
     @@station_roster << self
+    register_instance
   end
 
   def self.all
-    p @@station_roster
+    @@station_roster
   end
 
   def support_for_report(support_array)
