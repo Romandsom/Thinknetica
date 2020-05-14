@@ -6,13 +6,7 @@ class Train
   @@train_roster = {}
 
   def self.find(train_number)
-    required_train = nil
-    @@train_roster.each do |number, train|
-      if number == train_number
-        required_train = train
-      end
-    end
-    required_train
+    @@train_roster[train_number]
   end
 
   def initialize(speed = 0,number)

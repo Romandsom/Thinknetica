@@ -1,12 +1,12 @@
 require_relative 'module_brand'
-require_relative 'instancecounter'
-require_relative 'train_parent'
+require_relative 'instance_counter'
+require_relative 'train'
 require_relative 'cargo_car'
 require_relative 'cargo_train'
 require_relative 'passenger_car'
 require_relative 'passneger_train'
-require_relative 'routes'
-require_relative 'stations'
+require_relative 'route'
+require_relative 'station'
 require_relative 'aggregator'
 
 # c = Aggregator.new
@@ -14,7 +14,7 @@ require_relative 'aggregator'
 # s1=Station.new('b')
 # Station.instancecounter
 # c1=CargoCar.new('009')
-# ct = CargoTrain.new('09')
+#ct = CargoTrain.new('09')
 # ct1 = CargoTrain.new('08')
 # ct2 = CargoTrain.new('07')
 # ct3 = CargoTrain.new('05')

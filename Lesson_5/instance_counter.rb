@@ -7,10 +7,6 @@ module InstanceCounter
 
   module ClassMethods
     attr_accessor :instances_score
-
-    def instancecounter
-      instances_score || 0
-    end
   end
 
   module InstanceMethods
