@@ -12,34 +12,24 @@ require_relative 'aggregator'
 # c = Aggregator.new
 # s=Station.new('a')
 # s1=Station.new('b')
-# Station.instances
+# Station.instancecounter
 # c1=CargoCar.new('009')
-# CargoCar.instances
 # ct = CargoTrain.new('09')
 # ct1 = CargoTrain.new('08')
 # ct2 = CargoTrain.new('07')
 # ct3 = CargoTrain.new('05')
-# CargoTrain.instances
+# CargoTrain.instancecounter
 # cpt2 = PassengerCar.new('udrdmn')
 # ctp3 = PassengerCar.new('urddddmn')
-# PassengerCar.instances
 # cta = PassengerTrain.new('1')
 # cta1 = PassengerTrain.new('2')
 # cta2 = PassengerTrain.new('3')
 # cta3 = PassengerTrain.new('4')
 # cta3 = PassengerTrain.new('5')
-# PassengerTrain.instances
+# PassengerTrain.instancecounter
 # sqs=Route.new(s,s1)
 # s1d=Route.new(s1,s)
-# Route.instances
-# c1.naming('CK')
-# c1.brand_name
-# ct.naming('CKd')
-# ct.brand_name
-# ctp3.naming('CKdq')
-# ctp3.brand_name
-# cta1.naming('CKdqd')
-# cta1.brand_name
+# Route.instancecounter
 # CargoTrain.find('07')
 # Station.all
 
