@@ -2,11 +2,10 @@ class PassengerCar
   extend InstanceCounter::ClassMethods
   include BrandNaming
   include Validate
-  attr_reader :type_of_car, :number
+  attr_reader :number
 
   def initialize(number)
     @number = number
-    @type_of_car = 'passenger'
     validate!
   end
 
