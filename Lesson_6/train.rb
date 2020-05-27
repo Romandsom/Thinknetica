@@ -75,7 +75,7 @@ class Train
   end
 
   def validate!
-    raise 'Train type must be passenger or cargo' unless self.class == PassengerTrain || self.class == CargoTrain
+    raise 'Train type must be passenger or cargo' unless self.is_a?(PassengerTrain)||self.is_a?(CargoTrain)
     raise "Train must have a number" if number.empty?
     raise "Number has invalid format. ***-** or ***** expected" if number !~ NUMBER_FORMAT
     true
