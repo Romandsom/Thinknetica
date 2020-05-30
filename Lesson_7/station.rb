@@ -1,9 +1,19 @@
-
 class Station
   include InstanceCounter
   include Validate
   attr_reader :station_name, :station_trains
   @@station_roster = []
+
+  TRAIN_BLOCK  = Proc.new do
+    |train|
+    if train.is_a?(CargoTrain)
+      type = 'cargo'
+    elsif train.is_a?(PassengerTrain)
+      type = 'passenger'
+    end
+    p "Train ##{train.number} is a #{type} train, it has #{train.train_cars.count} cars"
+    train.each_wagon
+  end
 
   def initialize(station_name)
     @station_name = station_name
@@ -36,18 +46,8 @@ class Station
     @@station_roster << self
   end
 
-  def trains_to_block
-    train_block = Proc.new do
-      |train|
-      if train.is_a?(CargoTrain)
-        type = 'cargo'
-      else
-        type = 'passenger'
-      end
-      p "Train ##{train.number} is a #{type} train, it has #{train.train_cars.count} cars"
-      train.cars_to_block
-    end
-    @station_trains.each { |train| train_block.call(train) }
+  def each_train(&block)
+    @station_trains.each { |train| TRAIN_BLOCK.call(train) }
   end
 
   protected

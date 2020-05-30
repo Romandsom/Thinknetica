@@ -3,6 +3,7 @@ require_relative 'instance_counter'
 require_relative 'validate'
 require_relative 'aggregator'
 require_relative 'train'
+require_relative 'car'
 require_relative 'passenger_car'
 require_relative 'cargo_car'
 require_relative 'cargo_train'
@@ -10,41 +11,51 @@ require_relative 'passneger_train'
 require_relative 'route'
 require_relative 'station'
 
-# c = Aggregator.new
-# c.trains << PassengerTrain.new('11111')
-# c.trains << PassengerTrain.new('22222')
-# c.trains << PassengerTrain.new('33333')
-# c.trains << CargoTrain.new('44444')
-# c.trains << CargoTrain.new('55555')
-# a = Station.new('a')
-# cx = Station.new('b')
-# ccs = Station.new('c')
-# g = Station.new('d')
-# c.stations << a
-# c.stations << cx
-# c.stations << ccs
-# c.stations << g
-# ssd = PassengerCar.new('zzz', '12')
-# gh = CargoCar.new('ssa', '30')
-# vv= PassengerCar.new('yyy', '15')
-# ff= CargoCar.new('esa', '31')
-# jj= PassengerCar.new('ttt', '100')
-# uu= CargoCar.new('susa', '20')
-# ty = Route.new(a,cx)
-# er =Route.new(cx,a)
-# we =Route.new(ccs,a)
-# qw =Route.new(g,cx)
-# c.routes << ty
-# c.routes << er
-# c.routes << we
-# c.routes << qw
-# c.trains[0].attach_car(ssd)
-# c.trains[0].attach_car(vv)
-# c.trains[0].attach_car(jj)
-# c.trains[3].set_route(we)
-# c.trains[0].set_route(qw)
-# c.trains[3].attach_car(uu)
-# c.trains[3].attach_car(ff)
+c = Aggregator.new
+c.trains << PassengerTrain.new('11111')
+c.trains << PassengerTrain.new('22222')
+c.trains << PassengerTrain.new('33333')
+c.trains << CargoTrain.new('44444')
+tt = CargoTrain.new('55555')
+a = Station.new('a')
+cx = Station.new('b')
+ccs = Station.new('c')
+g = Station.new('d')
+c.stations << a
+c.stations << cx
+c.stations << ccs
+c.stations << g
+ssd = PassengerCar.new('zzz', 1)
+ssd.show_free_place
+ssd.fill_place
+ssd.show_free_place
+ssd.show_filled_place
+ssd.fill_place
+vv= PassengerCar.new('yyy', 110)
+ff= CargoCar.new('esa', '31')
+jj= PassengerCar.new('ttt', '32')
+uu= CargoCar.new('susa', '20')
+ty = Route.new(a,cx)
+er =Route.new(cx,a)
+we =Route.new(ccs,a)
+qw =Route.new(g,cx)
+c.routes << ty
+c.routes << er
+c.routes << we
+c.routes << qw
+c.trains[0].attach_car(ssd)
+c.trains[0].attach_car(vv)
+c.trains[0].attach_car(jj)
+c.trains[3].set_route(we)
+c.trains[0].set_route(qw)
+c.trains[3].attach_car(uu)
+c.trains[3].attach_car(ff)
+gh = CargoCar.new('ssa', '33')
+gh.show_free_place
+gh.fill_place
+gh.show_free_place
+gh.show_filled_place
+
 
 loop do
   puts %Q(

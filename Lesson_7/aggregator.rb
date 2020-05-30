@@ -172,7 +172,7 @@ class Aggregator
         support_for_report(support_array)
       end
     end
-    @stations.each {|station| station.trains_to_block}
+    @stations.each {|station| station.each_train}
   end
 
   def fill_place
@@ -190,9 +190,9 @@ class Aggregator
     p 'Choose the car to fill a seat/pallet'
     @subject_car = select_car
     if @subject_car.is_a?(PassengerCar)
-      @subject_car.fill_seat
+      @subject_car.fill_place
     elsif @subject_car.is_a?(CargoCar)
-      @subject_car.fill_pallet
+      @subject_car.fill_place
     end
     p @subject_car
   rescue RuntimeError => e
