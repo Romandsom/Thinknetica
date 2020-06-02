@@ -4,17 +4,6 @@ class Station
   attr_reader :station_name, :station_trains
   @@station_roster = []
 
-  TRAIN_BLOCK  = Proc.new do
-    |train|
-    if train.is_a?(CargoTrain)
-      type = 'cargo'
-    elsif train.is_a?(PassengerTrain)
-      type = 'passenger'
-    end
-    p "Train ##{train.number} is a #{type} train, it has #{train.train_cars.count} cars"
-    train.each_wagon
-  end
-
   def initialize(station_name)
     @station_name = station_name
     @station_trains = []
@@ -47,7 +36,7 @@ class Station
   end
 
   def each_train(&block)
-    @station_trains.each { |train| TRAIN_BLOCK.call(train) }
+    @station_trains.each { |train| block.call(train) }
   end
 
   protected

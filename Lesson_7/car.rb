@@ -7,35 +7,29 @@ class Car
   extend InstanceCounter::ClassMethods
   include BrandNaming
   include Validate
-  attr_reader :number, :total_places, :car_array, :place_name
+  attr_reader :number, :total_places, :place_name, :filled_places
 
   def initialize(number, total_places)
     @number = number
     @total_places = total_places.to_i
     validate!
-    @car_array = []
-    @car_array << @total_places
-    filled_places = 0
-    @car_array << filled_places
-    p self.class.place_name
-    p self.class.place_limit
+    @filled_places = 0
   end
 
-  def fill_place
-
-    if (@car_array[0] - @car_array[1]) > 0
-      @car_array[1] +=1
+  def fill_place(quantity_place)
+    if (@total_places - @filled_places) > 0 && (@total_places - @filled_places) >= quantity_place.to_i
+      @filled_places += quantity_place.to_i
     else
-      p 'The car is full'
+      p "The car is full or there is not enough place for passenger/cargo #{self.show_free_place}"
     end
   end
 
   def show_free_place
-    p "There are #{self.car_array[0] - self.car_array[1]} free #{self.class.place_name} in the car"
+    p "there are #{@total_places - @filled_places} free #{self.class.place_name}"
   end
 
   def show_filled_place
-    p "There are #{self.car_array[1]} filled #{@v} in the car"
+    p "and #{@filled_places} filled #{self.class.place_name}"
   end
 
   protected
@@ -44,6 +38,6 @@ class Car
     raise "Car must have a number" if number.empty?
     raise "Number has invalid format, word characters in one word expected" if number !~ /^\w{1}*$/i
     raise "Number must consist of no more, than 15 word characters in one word" if number.length > 15
-    raise "Number of places can not be more, than #{self.class.place_limit}" if @total_places > self.class.place_limit
+    raise "Number of places can not be more, than #{self.class.place_limit} #{self.class.place_name} " if @total_places > self.class.place_limit
   end
 end

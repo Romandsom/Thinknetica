@@ -1,6 +1,29 @@
 class Aggregator
   attr_reader :trains, :stations, :routes, :passenger_cars, :cargo_cars
 
+  TRAIN_BLOCK  = Proc.new do
+    |train|
+    if train.is_a?(CargoTrain)
+      type = 'cargo'
+    elsif train.is_a?(PassengerTrain)
+      type = 'passenger'
+    end
+    p "Train ##{train.number} is a #{type} train, it has #{train.train_cars.count} cars"
+    train.each_wagon(&CAR_BLOCK)
+  end
+
+  CAR_BLOCK = Proc.new do
+    |car|
+    if car.is_a?(CargoCar)
+      place_name = 'pallet(s)'
+      type = 'cargo'
+    else
+      place_name = 'seat(s)'
+      type = 'passenger'
+    end
+    p "Car ##{car.number} is a #{type} car, #{car.show_free_place}, #{car.show_filled_place}"
+  end
+
   def initialize
     @stations = []
     @trains = []
@@ -172,7 +195,7 @@ class Aggregator
         support_for_report(support_array)
       end
     end
-    @stations.each {|station| station.each_train}
+    @stations.each {|station| station.each_train(&TRAIN_BLOCK)}
   end
 
   def fill_place

@@ -8,18 +8,6 @@ class Train
 
   NUMBER_FORMAT = /^[\w]{3}-*[\w]{2}$/i
 
-  CAR_BLOCK = Proc.new do
-    |car|
-    if car.is_a?(CargoCar)
-      place_name = 'pallet(s)'
-      type = 'cargo'
-    else
-      place_name = 'seat(s)'
-      type = 'passenger'
-    end
-    p "Car ##{car.number} is a #{type} car, it has #{car.car_array[0] - car.car_array[1]} free #{place_name} and #{car.car_array[1]} filled #{place_name}"
-  end
-
   def self.find(train_number)
     @@train_roster[train_number]
   end
@@ -72,7 +60,7 @@ class Train
   end
 
   def each_wagon(&block)
-    @train_cars.each { |car| CAR_BLOCK.call(car) }
+    @train_cars.each { |car| block.call(car) }
   end
 
   protected

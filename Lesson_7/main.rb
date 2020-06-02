@@ -27,13 +27,15 @@ c.stations << ccs
 c.stations << g
 ssd = PassengerCar.new('zzz', 1)
 ssd.show_free_place
-ssd.fill_place
+ssd.fill_place('1')
 ssd.show_free_place
 ssd.show_filled_place
-ssd.fill_place
+ssd.fill_place('1')
 vv= PassengerCar.new('yyy', 110)
 ff= CargoCar.new('esa', '31')
+ff.fill_place('32')
 jj= PassengerCar.new('ttt', '32')
+jj.fill_place('10')
 uu= CargoCar.new('susa', '20')
 ty = Route.new(a,cx)
 er =Route.new(cx,a)
@@ -52,7 +54,7 @@ c.trains[3].attach_car(uu)
 c.trains[3].attach_car(ff)
 gh = CargoCar.new('ssa', '33')
 gh.show_free_place
-gh.fill_place
+gh.fill_place('10')
 gh.show_free_place
 gh.show_filled_place
 
