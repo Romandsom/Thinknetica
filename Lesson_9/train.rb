@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Train
+  extend Accessors  
   include InstanceCounter
   include BrandNaming
   include Validate

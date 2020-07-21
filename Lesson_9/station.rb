@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Station
+  extend Accessors
   include InstanceCounter
   include Validate
   attr_reader :station_name, :station_trains
