@@ -3,6 +3,8 @@
 class Route
   extend Accessors
   include InstanceCounter
+
+  attr_accessor_with_history :route
   attr_reader :route
 
   def initialize(first_station, last_station)

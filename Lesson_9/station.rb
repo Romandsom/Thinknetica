@@ -4,6 +4,7 @@ class Station
   extend Accessors
   include InstanceCounter
   include Validate
+  attr_accessor_with_history :station_trains
   attr_reader :station_name, :station_trains
 
   class << self

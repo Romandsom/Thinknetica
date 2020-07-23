@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class Train
-  extend Accessors  
+  extend Accessors
   include InstanceCounter
   include BrandNaming
   include Validate
 
   NUMBER_FORMAT = /^[\w]{3}-*[\w]{2}$/i.freeze
 
+  attr_accessor_with_history :train_cars
   attr_accessor :speed
   attr_reader :train_cars, :current_station, :train_route, :number
 
