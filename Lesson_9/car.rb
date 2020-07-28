@@ -3,8 +3,10 @@
 class Car
   include InstanceCounter
   include BrandNaming
-  include Validate
+  include Validation
   attr_reader :number, :total_places, :place_name, :filled_places
+  validate :total_places, :presence
+  validate :total_places, :type, Integer
 
   class << self
     attr_accessor :place_name, :place_limit
@@ -40,8 +42,7 @@ class Car
   protected
 
   def validate!
-    raise 'Car must have a number' if number.empty?
-    raise 'Number has invalid format, word characters in one word expected' if number !~ /^\w{1}*$/i
+    super
     raise 'Number must consist of no more, than 15 word characters in one word' if number.length > 15
     if @total_places > self.class.place_limit
       raise "Number of places can not be more, than #{self.class.place_limit} #{self.class.place_name}"

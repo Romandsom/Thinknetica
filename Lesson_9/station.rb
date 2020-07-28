@@ -3,7 +3,7 @@
 class Station
   extend Accessors
   include InstanceCounter
-  include Validate
+  include Validation
   attr_accessor_with_history :station_trains
   attr_reader :station_name, :station_trains
 
@@ -11,6 +11,9 @@ class Station
     attr_accessor :station_roster
   end
   @station_roster = []
+
+  validate :station_name, presence
+  validate :station_name, :type, String
 
   def self.all
     @station_roster
@@ -20,8 +23,8 @@ class Station
     @station_name = station_name.capitalize
     @station_trains = []
     self.class.station_roster << self
-    register_instance
     validate!
+    register_instance
   end
 
   def support_for_report(support_array)
@@ -42,15 +45,5 @@ class Station
 
   def each_train(&block)
     @station_trains.each { |train| block.call(train) }
-  end
-
-  protected
-
-  def validate!
-    raise 'Station must have a name' if station_name.empty?
-    raise 'Station name must consist of word characters, in one word' if station_name !~ /^\w{1}*$/i
-    raise 'Station name must consist of no more, than 15 word characters in one word' if station_name.length > 15
-
-    true
   end
 end

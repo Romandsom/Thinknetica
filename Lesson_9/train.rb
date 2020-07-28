@@ -4,13 +4,16 @@ class Train
   extend Accessors
   include InstanceCounter
   include BrandNaming
-  include Validate
+  include Validation
 
   NUMBER_FORMAT = /^[\w]{3}-*[\w]{2}$/i.freeze
 
   attr_accessor_with_history :train_cars
   attr_accessor :speed
   attr_reader :train_cars, :current_station, :train_route, :number
+  validate :number, :presence
+  validate :number, :format, NUMBER_FORMAT
+
 
   class << self
     attr_accessor :train_roster
@@ -26,8 +29,8 @@ class Train
     @number = number
     @train_cars = []
     self.class.train_roster[@number] = self
-    register_instance
     validate!
+    register_instance
   end
 
   def stop
@@ -85,8 +88,6 @@ class Train
 
   def validate!
     raise 'Train type must be passenger or cargo' unless is_a?(PassengerTrain) || is_a?(CargoTrain)
-    raise 'Train must have a number' if number.empty?
-    raise 'Number has invalid format. ***-** or ***** expected' if number !~ NUMBER_FORMAT
 
     true
   end
