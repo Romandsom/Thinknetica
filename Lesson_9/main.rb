@@ -3,7 +3,7 @@
 require_relative 'accesors'
 require_relative 'module_brand'
 require_relative 'instance_counter'
-require_relative 'validate'
+require_relative 'validation'
 require_relative 'aggregator'
 require_relative 'train'
 require_relative 'car'

@@ -12,7 +12,7 @@ class Station
   end
   @station_roster = []
 
-  validate :station_name, presence
+  validate :station_name, :presence
   validate :station_name, :type, String
 
   def self.all
