@@ -42,7 +42,6 @@ class Car
   protected
 
   def validate!
-    super
     raise 'Number must consist of no more, than 15 word characters in one word' if number.length > 15
     if @total_places > self.class.place_limit
       raise "Number of places can not be more, than #{self.class.place_limit} #{self.class.place_name}"

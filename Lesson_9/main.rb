@@ -15,57 +15,6 @@ require_relative 'route'
 require_relative 'station'
 
 c = Aggregator.new
-c.trains << PassengerTrain.new('11111')
-c.trains << PassengerTrain.new('22222')
-c.trains << PassengerTrain.new('33333')
-c.trains << CargoTrain.new('44444')
-tt = CargoTrain.new('55555')
-c.trains << tt
-a = Station.new('a')
-cx = Station.new('b')
-ccs = Station.new('c')
-g = Station.new('d')
-c.stations << a
-c.stations << cx
-c.stations << ccs
-c.stations << g
-ssd = PassengerCar.new('zzz', 1)
-ssd.show_free_place
-ssd.fill_place('1')
-ssd.show_free_place
-ssd.show_filled_place
-ssd.fill_place('1')
-vv = PassengerCar.new('yyy', 110)
-ff = CargoCar.new('esa', '31')
-ff.fill_place('32')
-jj = PassengerCar.new('ttt', '32')
-jj.fill_place('10')
-uu = CargoCar.new('susa', '20')
-ty = Route.new(a, cx)
-er = Route.new(cx, a)
-we = Route.new(ccs, a)
-qw = Route.new(g, cx)
-c.routes << ty
-c.routes << er
-c.routes << we
-c.routes << qw
-c.trains[0].attach_car(ssd)
-c.trains[0].attach_car(vv)
-c.trains[0].attach_car(jj)
-c.trains[3].establish_route(we)
-c.trains[0].establish_route(qw)
-c.trains[3].attach_car(uu)
-c.trains[3].attach_car(ff)
-gh = CargoCar.new('ssa', '33')
-gh.show_free_place
-gh.fill_place('10')
-gh.show_free_place
-gh.show_filled_place
-tt.establish_route(qw)
-tt.train_route_report
-tt.speed = 100
-c.cargo_cars << CargoCar.new('qq', '33')
-c.cargo_cars << CargoCar.new('zz', '33')
 
 loop do
   puts %(
